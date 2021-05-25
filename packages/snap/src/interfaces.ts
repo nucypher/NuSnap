@@ -1,9 +1,9 @@
-import {FilecoinNetwork, MessageStatus, MetamaskFilecoinRpcRequest, SnapConfig} from "@nucypher/nusnap-types";
+import {FilecoinNetwork, MessageStatus, MetamaskNucypherRpcRequest, SnapConfig} from "@nucypher/nusnap-types";
 import {defaultConfiguration} from "./configuration/predefined";
 
 export type FMethodCallback = (
   originString: string,
-  requestObject: MetamaskFilecoinRpcRequest
+  requestObject: MetamaskNucypherRpcRequest
 ) => Promise<unknown>;
 
 export type MetamaskState = {

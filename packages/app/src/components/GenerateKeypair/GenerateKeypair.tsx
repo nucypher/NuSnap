@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Card, CardContent, CardHeader, Grid, Typography, } from "@material-ui/core";
 import { FilecoinSnapApi } from "@nucypher/nusnap-types";
 import { Divider } from "@material-ui/core/";
+import { example } from "../../characters/example";
 
 export interface GenerateKeypairProps {
     api: FilecoinSnapApi | null;
@@ -12,6 +13,14 @@ export const GenerateKeypair = (props: GenerateKeypairProps) => {
     const [ keyPairSeed, setKeyPairSeed ] = useState<string>("");
     // const [ secretKey, setSecretKey ] = useState<string>("<todo>");
     // const [ publicKey, setPublicKey ] = useState<string>("<todo>");
+
+    useEffect(()=>{
+        async function init() {
+            const umbral = await import("umbral-pre");
+            example(umbral);
+        }
+        init();
+    }, []);
 
     const onSubmit = async () => {
         if (api) {
