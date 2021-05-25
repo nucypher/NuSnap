@@ -1,0 +1,21 @@
+{
+  "name": "@nucypher/nusnap-types",
+  "version": "1.0.0",
+  "types": "./index.d.ts",
+  "license": "(Apache-2.0 AND MIT)",
+  "author": "NodeFactory <info@nodefactory.io>",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Types for NuSnap.",
+  "keywords": [
+    "filecoin",
+    "metamask",
+    "snap",
+    "plugin",
+    "dapp"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}
