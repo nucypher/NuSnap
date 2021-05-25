@@ -6,3 +6,13 @@ Based on [MetaMask/filsnap](https://github.com/MetaMask/filsnap). It works with 
 Original `README.md` is in `README.old.md`.
 
 **This is a work in progress.**
+
+## Usage
+
+Build dependencies
+```bash
+cd rust-umbral
+cargo build
+cd umbral-pre-wasm
+make
+```
