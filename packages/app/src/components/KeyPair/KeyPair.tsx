@@ -14,15 +14,7 @@ export interface KeyPairProps extends ICharacter {}
 
 export const KeyPair = (props: KeyPairProps) => {
   const { name, keyPair } = props;
-  // if (!name || !keyPair) {
-  //   return <></>;
-  // }
-
   const { seed, publicKey, secretKey } = keyPair;
-
-  // if (!seed || !publicKey || !secretKey) {
-  //   return <></>;
-  // }
 
   return (
     <Card style={{ height: "100%" }}>
