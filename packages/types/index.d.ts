@@ -152,9 +152,9 @@ export interface MessageStatus {
 
 export type FilecoinNetwork = "f" | "t";
 
-export interface FilecoinEventApi {}
+export interface NucypherEventApi {}
 
-export interface FilecoinSnapApi {
+export interface NucypherSnapApi {
   getPublicKey(): Promise<string>;
   getAddress(): Promise<string>;
   getBalance(): Promise<string>;

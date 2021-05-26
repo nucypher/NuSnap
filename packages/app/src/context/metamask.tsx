@@ -1,19 +1,19 @@
 import React, {createContext, Dispatch, PropsWithChildren, Reducer, useReducer} from "react";
-import {hasMetaMask, MetamaskFilecoinSnap} from "@nucypher/nusnap-adapter";
+import {hasMetaMask, MetamaskNucypherSnap} from "@nucypher/nusnap-adapter";
 
-interface IFilecoinSnap {
+interface INucypherSnap {
     isInstalled: boolean
     message: string
-    snap?: MetamaskFilecoinSnap
+    snap?: MetamaskNucypherSnap
 }
 
 export interface MetamaskState {
-    filecoinSnap: IFilecoinSnap,
+    nucypherSpan: INucypherSnap,
     hasMetaMask: boolean,
 }
 
 const initialState: MetamaskState = {
-    filecoinSnap: {
+    nucypherSpan: {
         isInstalled: false,
         message: ""
     },
@@ -32,7 +32,7 @@ const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
         case MetamaskActions.SET_INSTALLED_STATUS: {
             return {
                 ...state,
-                filecoinSnap: action.payload
+                nucypherSpan: action.payload
             }
         }
         default: {

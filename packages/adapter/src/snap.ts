@@ -1,4 +1,4 @@
-import {FilecoinSnapApi} from "@nucypher/nusnap-types";
+import {NucypherSnapApi} from "@nucypher/nusnap-types";
 import {
   calculateGasForMessage,
   configure,
@@ -11,7 +11,7 @@ import {
   getAppKey,
 } from "./methods";
 
-export class MetamaskFilecoinSnap {
+export class MetamaskNucypherSnap {
 
   // snap parameters
   protected readonly pluginOrigin: string;
@@ -22,7 +22,7 @@ export class MetamaskFilecoinSnap {
     this.snapId = `wallet_plugin_${this.pluginOrigin}`;
   }
 
-  public getFilecoinSnapApi = async (): Promise<FilecoinSnapApi> => {
+  public getNucypherSnapApi = async (): Promise<NucypherSnapApi> => {
     return {
       calculateGasForMessage: calculateGasForMessage.bind(this),
       configure: configure.bind(this),

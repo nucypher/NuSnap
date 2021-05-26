@@ -1,5 +1,5 @@
 import {SnapRpcMethodRequest} from "@nucypher/nusnap-types";
-import {enableFilecoinSnap, MetamaskFilecoinSnap} from "@nucypher/nusnap-adapter";
+import {enableNucypherSnap, MetamaskNucypherSnap} from "@nucypher/nusnap-adapter";
 
 declare global {
     interface Window {
@@ -21,16 +21,16 @@ let isInstalled: boolean = false;
 
 export interface SnapInitializationResponse {
     isSnapInstalled: boolean;
-    snap?: MetamaskFilecoinSnap;
+    snap?: MetamaskNucypherSnap;
 }
 
 export async function installFilecoinSnap(): Promise<SnapInitializationResponse> {
     try {
         console.log('Attempting to connect to snap...');
-        const metamaskFilecoinSnap = await enableFilecoinSnap({network: "f"}, snapOrigin);
+        const MetamaskNucypherSnap = await enableNucypherSnap({network: "f"}, snapOrigin);
         isInstalled = true;
         console.log('Snap installed!');
-        return {isSnapInstalled: true, snap: metamaskFilecoinSnap};
+        return {isSnapInstalled: true, snap: MetamaskNucypherSnap};
     } catch (e) {
         console.log(e);
         isInstalled = false;

@@ -40,7 +40,7 @@ export const MetaMaskConnector = () => {
     };
 
     const shouldDisplaySnackbar = (): boolean => {
-        return !!(!state.filecoinSnap.isInstalled && state.filecoinSnap.message);
+        return !!(!state.nucypherSpan.isInstalled && state.nucypherSpan.message);
     };
 
     return (
@@ -53,7 +53,7 @@ export const MetaMaskConnector = () => {
                 open={shouldDisplaySnackbar()}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message={state.filecoinSnap.message}
+                message={state.nucypherSpan.message}
                 action={
                     <React.Fragment>
                         <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>

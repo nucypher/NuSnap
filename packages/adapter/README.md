@@ -14,10 +14,10 @@ For more details on Filecoin snap itself see [snap repo](https://github.com/Node
 Adapter has only exposed function for installing Filecoin snap.
 
 ```typescript
-async function enableFilecoinSnap(
+async function enableNucypherSnap(
   config: Partial<SnapConfig>, 
   pluginOrigin?: string
-): Promise<MetamaskFilecoinSnap> 
+): Promise<MetamaskNucypherSnap> 
 ```
 
 On snap installation, it is possible to send full or partial configuration.
@@ -43,13 +43,13 @@ export interface UnitConfiguration {
 }
 ```
 
-After snap installation, this function returns `MetamaskFilecoinSnap` object that can be used to retrieve snap API. 
+After snap installation, this function returns `MetamaskNucypherSnap` object that can be used to retrieve snap API. 
 An example of initializing Filecoin snap and invoking snap API is shown below.
 
 ```typescript
 // install snap and fetch API
-const snap = await enableFilecoinSnap({network: "t"});
-const api = await metamaskFilecoinSnap.getFilecoinSnapApi();
+const snap = await enableNucypherSnap({network: "t"});
+const api = await MetamaskNucypherSnap.getNucypherSnapApi();
 
 // invoke API
 const address = await api.getAddress();

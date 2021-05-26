@@ -1,11 +1,11 @@
 import {hasMetaMask, isMetamaskSnapsSupported, isSnapInstalled} from "./utils";
-import {MetamaskFilecoinSnap as MFSnap} from "./snap";
+import {MetamaskNucypherSnap as MFSnap} from "./snap";
 import {SnapConfig} from "@nucypher/nusnap-types";
 
 const defaultSnapOrigin = "https://bafybeigzphbumdkucnj2c6nr5xb3kwsq5gs2gp7w3qldgbvfeycfsbjylu.ipfs.infura-ipfs.io";
 const defaultSnapId = `wallet_plugin_${defaultSnapOrigin}`;
 
-export type MetamaskFilecoinSnap = MFSnap;
+export type MetamaskNucypherSnap = MFSnap;
 
 export {hasMetaMask, isMetamaskSnapsSupported} from "./utils";
 
@@ -20,11 +20,11 @@ export {hasMetaMask, isMetamaskSnapsSupported} from "./utils";
  * @param config - SnapConfig
  * @param pluginOrigin
  *
- * @return MetamaskFilecoinSnap - adapter object that exposes snap API
+ * @return MetamaskNucypherSnap - adapter object that exposes snap API
  */
-export async function enableFilecoinSnap(
+export async function enableNucypherSnap(
   config: Partial<SnapConfig>, pluginOrigin?: string
-): Promise<MetamaskFilecoinSnap> {
+): Promise<MetamaskNucypherSnap> {
 
   let snapId = defaultSnapId;
   if (pluginOrigin) {
@@ -57,7 +57,7 @@ export async function enableFilecoinSnap(
     pluginOrigin || defaultSnapOrigin
   );
   // set initial configuration
-  await (await snap.getFilecoinSnapApi()).configure(config);
+  await (await snap.getNucypherSnapApi()).configure(config);
   // return snap object
   return snap;
 }
