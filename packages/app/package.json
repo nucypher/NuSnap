@@ -22,7 +22,7 @@
     "sass": "^1.26.3",
     "to-hex": "^0.0.15",
     "typescript": "~3.7.2",
-    "umbral-pre": "^0.0.3"
+    "umbral-pre": "file:../../../rust-umbral/umbral-pre-wasm/pkg"
   },
   "scripts": {
     "predeploy": "yarn build",

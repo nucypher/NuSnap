@@ -14,6 +14,12 @@ Install 9.3.0 version of [MetaMask/metamask-filecoin-developer-beta](https://git
 
 ## Usage
 
+Checkout git submodules
+
+```bash
+git submodule update --init --recursive
+```
+
 Build dependencies
 
 ```bash
@@ -27,5 +33,10 @@ Follow original instructions in `README.old.md`:
 
 ```bash
 yarn install
+
+# Workaround for linking local package
+rm -r node-modules/umbral-pre
+cp -R rust-umbral/umbral-pre-wasm/pkg node_modules/umbral-pre
+
 yarn run demo
 ```
