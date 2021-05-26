@@ -1,26 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Box,
-  Container,
-  Grid,
-  Hidden,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from "@material-ui/core/";
+import { Box, Container, Grid, Hidden, Typography } from "@material-ui/core/";
 import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
-import { Account } from "../../components/Account/Account";
 import { NucypherSnapApi } from "@nucypher/nusnap-types";
-import { Alice } from "../../components/Alice/Alice";
-import { Bob } from "../../components/Bob/Bob";
+import { runUmbralExample } from "../../example";
 
 export const Dashboard = () => {
   const [state] = useContext(MetaMaskContext);
-
-  const [address, setAddress] = useState("");
-  const [publicKey, setPublicKey] = useState("");
 
   const [appKey, setAppKey] = useState("");
 
@@ -30,17 +16,6 @@ export const Dashboard = () => {
 
   const [umbral, setUmbral] = useState<any | null>(null);
   const [crypto, setCrypto] = useState<any | null>(null);
-
-  const handleNetworkChange = async (
-    event: React.ChangeEvent<{ value: any }>
-  ) => {
-    const selectedNetwork = event.target.value as "f" | "t";
-    if (selectedNetwork === network) return;
-    if (api) {
-      await api.configure({ network: selectedNetwork });
-      setNetwork(selectedNetwork);
-    }
-  };
 
   useEffect(() => {
     (async () => {
@@ -54,8 +29,6 @@ export const Dashboard = () => {
   useEffect(() => {
     (async () => {
       if (api) {
-        setAddress(await api.getAddress());
-        setPublicKey(await api.getPublicKey());
         setAppKey(await api.getAppKey());
       }
     })();
@@ -73,7 +46,11 @@ export const Dashboard = () => {
   if (!crypto || !umbral) {
     return <></>;
   }
-  
+
+  if (appKey) {
+    runUmbralExample(crypto, umbral, appKey);
+  }
+
   return (
     <Container maxWidth="lg">
       <Grid
@@ -96,26 +73,7 @@ export const Dashboard = () => {
           <MetaMaskConnector />
         </Hidden>
         <Hidden xsUp={!state.nucypherSpan.isInstalled}>
-          <Box m="1rem" alignSelf="baseline">
-            <InputLabel>Network</InputLabel>
-            <Select defaultValue={"f"} onChange={handleNetworkChange}>
-              <MenuItem value={"t"}>Testnet</MenuItem>
-              <MenuItem value={"f"}>Mainnet</MenuItem>
-            </Select>
-          </Box>
-          <Grid container spacing={3} alignItems="stretch">
-            <Grid item xs={12}>
-              <Account address={address} publicKey={publicKey} api={api} />
-            </Grid>
-          </Grid>
-          <Box m="1rem" />
-          <Grid container spacing={3} alignItems="stretch">
-            <Grid item md={6} xs={12}>
-              <Alice crypto={crypto} umbral={umbral} appKey={appKey}/>
-              <Box m="0.5rem" />
-              <Bob crypto={crypto} umbral={umbral} appKey={appKey}/>
-            </Grid>
-          </Grid>
+          <Typography variant="h4">See console for results.</Typography>
         </Hidden>
       </Grid>
     </Container>
