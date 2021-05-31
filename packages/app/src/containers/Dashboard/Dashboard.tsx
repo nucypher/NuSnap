@@ -2,15 +2,26 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Container, Grid, Hidden, Typography } from "@material-ui/core/";
 import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
-import { NucypherSnapApi } from "@nucypher/nusnap-types";
-import { runUmbralExample } from "../../example";
+import { KeyPair, NucypherSnapApi } from "@nucypher/nusnap-types";
+import {
+  runUmbralExampleWithAppKey,
+  runUmbralExampleWithKeyPairs,
+} from "../../example";
+
+const EMPTY_KEY_PAIR: KeyPair = {
+  address: "",
+  privateKey: "",
+  publicKey: "",
+};
 
 export const Dashboard = () => {
   const [state] = useContext(MetaMaskContext);
 
   const [appKey, setAppKey] = useState("");
 
-  const [network, setNetwork] = useState<"f" | "t">("f");
+  const [aliceKeyPair, setAliceKeyPair] = useState(EMPTY_KEY_PAIR);
+  const [signerKeyPair, setSignerKeyPair] = useState(EMPTY_KEY_PAIR);
+  const [bobKeyPair, setBobKeyPair] = useState(EMPTY_KEY_PAIR);
 
   const [api, setApi] = useState<NucypherSnapApi | null>(null);
 
@@ -29,10 +40,12 @@ export const Dashboard = () => {
   useEffect(() => {
     (async () => {
       if (api) {
-        setAppKey(await api.getAppKey());
+        setAliceKeyPair(await api.getKeyPair(0));
+        setSignerKeyPair(await api.getKeyPair(1));
+        setBobKeyPair(await api.getKeyPair(2));
       }
     })();
-  }, [api, network]);
+  }, [api]);
 
   useEffect(() => {
     // TODO: Find better way to async load external deps
@@ -48,7 +61,43 @@ export const Dashboard = () => {
   }
 
   if (appKey) {
-    runUmbralExample(crypto, umbral, appKey);
+    console.log("=== Demo based on the appKey ===");
+    console.log(
+      "This demo is using appKey as provided by MetaMask snap API. The appKey (key) is used as derivation key for all other keys in this demo."
+    );
+    console.log(
+      "Notice that key is THE SAME for all accounts in a single wallet. You can switch MM accounts to investigate that behaviour."
+    );
+    runUmbralExampleWithAppKey(crypto, umbral, appKey);
+    console.log("=== Done! ===");
+  }
+
+  if (
+    aliceKeyPair &&
+    signerKeyPair &&
+    bobKeyPair &&
+    aliceKeyPair !== EMPTY_KEY_PAIR &&
+    signerKeyPair !== EMPTY_KEY_PAIR &&
+    bobKeyPair !== EMPTY_KEY_PAIR
+  ) {
+    console.log("=== Demo based on the selected MM account's private key ===");
+    console.log(
+      "This demo is using private key generated from MetaMask's hierarchical wallet. Every private key is specific to currently selected MetaMask account."
+    );
+    console.log(
+      "Notice that key is DIFFERENT for every selected account in MetaMask. You can switch MM accounts to investigate that behaviour."
+    );
+    console.log("Currently selected key pair:");
+    console.log({aliceKeyPair});
+    console.log({signerKeyPair});
+    console.log({bobKeyPair});
+    runUmbralExampleWithKeyPairs(
+      umbral,
+      aliceKeyPair,
+      signerKeyPair,
+      bobKeyPair
+    );
+    console.log("=== Done! ===");
   }
 
   return (

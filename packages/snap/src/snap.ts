@@ -1,33 +1,37 @@
-import {EmptyMetamaskState, Wallet} from "./interfaces";
-import {getAddress} from "./rpc/getAddress";
-import {exportPrivateKey} from "./rpc/exportPrivateKey";
-import {getPublicKey} from "./rpc/getPublicKey";
-import {getApi} from "./filecoin/api";
-import {LotusRpcApi} from "./filecoin/types";
-import {getBalance} from "./rpc/getBalance";
-import {configure} from "./rpc/configure";
-import {updateAsset} from "./asset";
-import {getMessages} from "./rpc/getMessages";
-import {signMessage, signMessageRaw} from "./rpc/signMessage";
-import {sendMessage} from "./rpc/sendMessage";
-import {estimateMessageGas} from "./rpc/estimateMessageGas";
+import { EmptyMetamaskState, Wallet } from "./interfaces";
+import { getAddress } from "./rpc/getAddress";
+import { exportPrivateKey } from "./rpc/exportPrivateKey";
+import { getPublicKey } from "./rpc/getPublicKey";
+import { getApi } from "./filecoin/api";
+import { LotusRpcApi } from "./filecoin/types";
+import { getBalance } from "./rpc/getBalance";
+import { configure } from "./rpc/configure";
+import { updateAsset } from "./asset";
+import { getMessages } from "./rpc/getMessages";
+import { signMessage, signMessageRaw } from "./rpc/signMessage";
+import { sendMessage } from "./rpc/sendMessage";
+import { estimateMessageGas } from "./rpc/estimateMessageGas";
 import { getAppKey } from "./rpc/getAppKey";
+import { exportKeyPair } from "./rpc/exportKeyPair";
 
 declare let wallet: Wallet;
 
 const apiDependentMethods = [
-  "nu_getBalance", "nu_signMessage", "nu_sendMessage", "nu_getGasForMessage"
+  "nu_getBalance",
+  "nu_signMessage",
+  "nu_sendMessage",
+  "nu_getGasForMessage",
 ];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   const state = await wallet.request({
-    method: 'snap_getState',
+    method: "snap_getState",
   });
 
   if (!state) {
     // initialize state if empty and set default config
     await wallet.request({
-      method: 'snap_updateState',
+      method: "snap_updateState",
       params: [EmptyMetamaskState()],
     });
   }
@@ -41,7 +45,9 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   switch (requestObject.method) {
     case "nu_configure":
       const configuration = configure(
-        wallet, requestObject.params.configuration.network, requestObject.params.configuration
+        wallet,
+        requestObject.params.configuration.network,
+        requestObject.params.configuration
       );
       api = await getApi(wallet);
       await updateAsset(wallet, originString, await getBalance(wallet, api));
@@ -65,9 +71,15 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case "nu_sendMessage":
       return await sendMessage(wallet, api, requestObject.params.signedMessage);
     case "nu_getGasForMessage":
-      return await estimateMessageGas(wallet, api, requestObject.params.message);
+      return await estimateMessageGas(
+        wallet,
+        api,
+        requestObject.params.message
+      );
     case "nu_getAppKey":
       return await getAppKey(wallet);
+    case "nu_getKeyPair":
+      return exportKeyPair(wallet, requestObject.params.accountIndex);
     default:
       throw new Error(`Unsupported RPC method`);
   }

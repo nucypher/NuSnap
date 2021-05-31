@@ -9,6 +9,7 @@ import {
   signMessage,
   signMessageRaw,
   getAppKey,
+  getKeyPair,
 } from "./methods";
 
 export class MetamaskNucypherSnap {
@@ -35,6 +36,7 @@ export class MetamaskNucypherSnap {
       signMessage: signMessage.bind(this),
       signMessageRaw: signMessageRaw.bind(this),
       getAppKey: getAppKey.bind(this),
+      getKeyPair: getKeyPair.bind(this),
     };
   };
 }

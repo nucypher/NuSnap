@@ -16,6 +16,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "bip39": "^3.0.4",
+    "ethereumjs-wallet": "^1.0.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0",
@@ -47,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/bip39": "^3.0.0",
     "react-app-rewired": "^2.1.8",
     "wasm-loader": "^1.3.0"
   }
