@@ -3,10 +3,7 @@ import { Box, Container, Grid, Hidden, Typography } from "@material-ui/core/";
 import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
 import { KeyPair, NucypherSnapApi } from "@nucypher/nusnap-types";
-import {
-  runUmbralExampleWithAppKey,
-  runUmbralExampleWithKeyPairs,
-} from "../../example";
+import { runUmbralExample } from "../../example";
 
 const EMPTY_KEY_PAIR: KeyPair = {
   address: "",
@@ -16,8 +13,6 @@ const EMPTY_KEY_PAIR: KeyPair = {
 
 export const Dashboard = () => {
   const [state] = useContext(MetaMaskContext);
-
-  const [appKey, setAppKey] = useState("");
 
   const [aliceKeyPair, setAliceKeyPair] = useState(EMPTY_KEY_PAIR);
   const [signerKeyPair, setSignerKeyPair] = useState(EMPTY_KEY_PAIR);
@@ -60,18 +55,6 @@ export const Dashboard = () => {
     return <></>;
   }
 
-  if (appKey) {
-    console.log("=== Demo based on the appKey ===");
-    console.log(
-      "This demo is using appKey as provided by MetaMask snap API. The appKey (key) is used as derivation key for all other keys in this demo."
-    );
-    console.log(
-      "Notice that key is THE SAME for all accounts in a single wallet. You can switch MM accounts to investigate that behaviour."
-    );
-    runUmbralExampleWithAppKey(crypto, umbral, appKey);
-    console.log("=== Done! ===");
-  }
-
   if (
     aliceKeyPair &&
     signerKeyPair &&
@@ -80,18 +63,12 @@ export const Dashboard = () => {
     signerKeyPair !== EMPTY_KEY_PAIR &&
     bobKeyPair !== EMPTY_KEY_PAIR
   ) {
-    console.log("=== Demo based on the selected MM account's private key ===");
-    console.log(
-      "This demo is using private key generated from MetaMask's hierarchical wallet. Every private key is specific to currently selected MetaMask account."
-    );
-    console.log(
-      "Notice that key is DIFFERENT for every selected account in MetaMask. You can switch MM accounts to investigate that behaviour."
-    );
-    console.log("Currently selected key pair:");
-    console.log({aliceKeyPair});
-    console.log({signerKeyPair});
-    console.log({bobKeyPair});
-    runUmbralExampleWithKeyPairs(
+    console.log({ aliceKeyPair });
+    console.log({ signerKeyPair });
+    console.log({ bobKeyPair });
+    
+    console.log("=== Starting demo! ===");
+    runUmbralExample(
       umbral,
       aliceKeyPair,
       signerKeyPair,

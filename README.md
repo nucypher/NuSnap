@@ -45,6 +45,28 @@ yarn run demo
 
 - Currently, to update snaps you have to reinstall MetaMask
 
+- Sometimes, the `package/app` dependencies in `package/snap` are not properly generated. Run:
+
+```bash
+# Remove all local files and dependencies
+# Be cautious: This is a destructive command
+git clean -d -x -f -n # remove -n after inspecting results
+
+yarn install
+
+# Apply workaround
+rm -rf node-modules/umbral-pre/*
+cp -R rust-umbral/umbral-pre-wasm/pkg/* node_modules/umbral-pre
+
+# Proceede as usual
+yarn run demo
+```
+
+One liner:
+```bash
+git clean -d -x -f ; yarn install ; rm -rf node-modules/umbral-pre/* ; cp -R rust-umbral/umbral-pre-wasm/pkg/* node_modules/umbral-pre
+```
+
 # Notes
 
 ## On `appKey` and MetaMask accounts
@@ -64,8 +86,8 @@ const { hdkey } = require("ethereumjs-wallet");
 const bip39 = require("bip39");
 
 const accountIndex = 0;
-const mnemonic =
-  "space pill roof organ deputy tenant raven quit push lava despair immense";
+const mnemonic = "space pill roof organ deputy tenant raven quit push lava despair immense";
+
 const seed = await bip39.mnemonicToSeed(mnemonic);
 const path = `m/44'/60'/0'/0/${accountIndex}`;
 const hdwallet = hdkey.fromMasterSeed(seed);

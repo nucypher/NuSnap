@@ -1,44 +1,11 @@
-import { makeKeyPair } from "./characters";
+import { KeyPair } from "@nucypher/nusnap-types";
 import { keyPairToUmbralSk } from "./crypto";
-
-export const runUmbralExampleWithAppKey = (
-  crypto: any,
-  umbral: any,
-  key: string
-) => {
-  console.log({ key });
-
-  const aliceKeyPair = makeKeyPair(crypto, umbral, key, "alice");
-  const signerKeyPair = makeKeyPair(crypto, umbral, key, "signer");
-  const bobKeyPair = makeKeyPair(crypto, umbral, key, "bob");
-
-  return runUmbralExample(
-    umbral,
-    aliceKeyPair.secretKey,
-    signerKeyPair.secretKey,
-    bobKeyPair.secretKey
-  );
-};
-
-export const runUmbralExampleWithKeyPairs = (
-  umbral: any,
-  aliceKeyPair: any,
-  signerKeyPair: any,
-  bobKeyPair: any
-) => {
-  return runUmbralExample(
-    umbral,
-    keyPairToUmbralSk(umbral, aliceKeyPair),
-    keyPairToUmbralSk(umbral, signerKeyPair),
-    keyPairToUmbralSk(umbral, bobKeyPair)
-  );
-};
 
 export const runUmbralExample = (
   umbral: any,
-  aliceSecretKey: any,
-  signerSecretKey: any,
-  bobSecretKey: any
+  aliceKeyPair: KeyPair,
+  signerKeyPair: KeyPair,
+  bobKeyPair: KeyPair
 ) => {
   const enc = new TextEncoder();
   const dec = new TextDecoder("utf-8");
@@ -48,14 +15,14 @@ export const runUmbralExample = (
   // need a signing keypair.
 
   // Key Generation (on Alice's side)
-  const alice_sk = aliceSecretKey; // umbral.SecretKey.random();
+  const alice_sk = keyPairToUmbralSk(umbral, aliceKeyPair); // umbral.SecretKey.random();
   const alice_pk = umbral.PublicKey.from_secret_key(alice_sk);
-  const signing_sk = signerSecretKey; // umbral.SecretKey.random();
+  const signing_sk = keyPairToUmbralSk(umbral, signerKeyPair); // umbral.SecretKey.random();
   const signer = new umbral.Signer(signing_sk);
   // const verifying_pk = umbral.PublicKey.from_secret_key(signing_sk);
 
   // Key Generation (on Bob's side)
-  const bob_sk = bobSecretKey; // umbral.SecretKey.random();
+  const bob_sk = keyPairToUmbralSk(umbral, bobKeyPair); // umbral.SecretKey.random();
   const bob_pk = umbral.PublicKey.from_secret_key(bob_sk);
 
   // Now const's encrypt data with Alice's public key.
