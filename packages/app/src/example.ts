@@ -1,19 +1,11 @@
-import { makeKeyPair } from "./characters";
+import { IKeyPair } from "./crypto";
 
-export const runUmbralExample = (crypto: any, umbral: any, appKey: string) => {
-  console.log(
-    "Notice that appKey is the same for all accounts in a single wallet. You can switch MM accounts to investigate that."
-  );
-  console.log({ appKey });
-
-  const aliceKeyPair = makeKeyPair(crypto, umbral, appKey, "alice");
-  const signerKeyPair = makeKeyPair(crypto, umbral, appKey, "signer");
-  const bobKeyPair = makeKeyPair(crypto, umbral, appKey, "bob");
-
-  console.log({ aliceKeyPair });
-  console.log({ signerKeyPair });
-  console.log({ bobKeyPair });
-
+export const runUmbralExample = (
+  umbral: any,
+  aliceKeyPair: IKeyPair,
+  signerKeyPair: IKeyPair,
+  bobKeyPair: IKeyPair
+) => {
   const enc = new TextEncoder();
   const dec = new TextDecoder("utf-8");
 
@@ -22,14 +14,20 @@ export const runUmbralExample = (crypto: any, umbral: any, appKey: string) => {
   // need a signing keypair.
 
   // Key Generation (on Alice's side)
-  const alice_sk = aliceKeyPair.secretKey; // umbral.SecretKey.random();
+  const alice_sk = umbral.SecretKey.from_bytes(
+    Buffer.from(aliceKeyPair.secretKey, "hex")
+  ); // umbral.SecretKey.random();
   const alice_pk = umbral.PublicKey.from_secret_key(alice_sk);
-  const signing_sk = signerKeyPair.secretKey; // umbral.SecretKey.random();
+  const signing_sk = umbral.SecretKey.from_bytes(
+    Buffer.from(signerKeyPair.secretKey, "hex")
+  ); // umbral.SecretKey.random();
   const signer = new umbral.Signer(signing_sk);
-  const verifying_pk = umbral.PublicKey.from_secret_key(signing_sk);
+  // const verifying_pk = umbral.PublicKey.from_secret_key(signing_sk); // unused key
 
   // Key Generation (on Bob's side)
-  const bob_sk = bobKeyPair.secretKey; // umbral.SecretKey.random();
+  const bob_sk = umbral.SecretKey.from_bytes(
+    Buffer.from(bobKeyPair.secretKey, "hex")
+  ); // umbral.SecretKey.random();
   const bob_pk = umbral.PublicKey.from_secret_key(bob_sk);
 
   // Now const's encrypt data with Alice's public key.

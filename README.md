@@ -39,3 +39,15 @@ cp -R rust-umbral/umbral-pre-wasm/pkg/* node_modules/umbral-pre
 
 yarn run demo
 ```
+
+## Common issues
+
+- Sometimes, the `package/app` dependencies in `package/snap` are not properly generated. Run:
+
+```bash
+# Remove all local files and dependencies
+# Be cautious: This is a destructive command
+git clean -d -x -f -n # remove -n after inspecting results
+
+git clean -d -x -f ; yarn install ; cp -R rust-umbral/umbral-pre-wasm/pkg/* node_modules/umbral-pre
+```
