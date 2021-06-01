@@ -6,11 +6,11 @@ import { NucypherSnapApi } from "@nucypher/nusnap-types";
 import { runUmbralExample } from "../../example";
 
 export const Dashboard = () => {
+  const web3 = (window as any).web3.currentProvider;
+
   const [state] = useContext(MetaMaskContext);
 
   const [appKey, setAppKey] = useState("");
-
-  const [network, setNetwork] = useState<"f" | "t">("f");
 
   const [api, setApi] = useState<NucypherSnapApi | null>(null);
 
@@ -29,10 +29,12 @@ export const Dashboard = () => {
   useEffect(() => {
     (async () => {
       if (api) {
-        setAppKey(await api.getAppKey());
+        const selectedAddress = (await web3.enable())[0];
+        console.log({ selectedAddress });
+        setAppKey(await api.getAppKey(selectedAddress));
       }
     })();
-  }, [api, network]);
+  }, [api, web3]);
 
   useEffect(() => {
     // TODO: Find better way to async load external deps

@@ -67,7 +67,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case "nu_getGasForMessage":
       return await estimateMessageGas(wallet, api, requestObject.params.message);
     case "nu_getAppKey":
-      return await getAppKey(wallet);
+      return await getAppKey(wallet, requestObject.params.address);
     default:
       throw new Error(`Unsupported RPC method`);
   }

@@ -52,8 +52,8 @@ export async function getMessages(this: MetamaskNucypherSnap): Promise<MessageSt
   return await sendSnapMethod({method: "nu_getMessages"}, this.snapId);
 }
 
-export async function getAppKey(this: MetamaskNucypherSnap): Promise<string> {
-  return await sendSnapMethod({method: "nu_getAppKey"}, this.snapId);
+export async function getAppKey(this: MetamaskNucypherSnap, address: string ): Promise<string> {
+  return await sendSnapMethod({method: "nu_getAppKey", params: {address}}, this.snapId);
 }
 
 export async function calculateGasForMessage(

@@ -1,4 +1,4 @@
-export interface GetPublicKeyRequest{
+export interface GetPublicKeyRequest {
   method: "nu_getPublicKey";
 }
 
@@ -55,20 +55,23 @@ export interface GetGasForMessageRequest {
 
 export interface GetAppKeyRequest {
   method: "nu_getAppKey";
+  params: {
+    address: string;
+  };
 }
 
 export type MetamaskNucypherRpcRequest =
-    GetPublicKeyRequest |
-    GetAddressRequest |
-    ExportSeedRequest |
-    ConfigureRequest |
-    GetBalanceRequest |
-    GetMessagesRequest |
-    SignMessageRequest |
-    SignMessageRawRequest |
-    SendMessageRequest |
-    GetGasForMessageRequest |
-    GetAppKeyRequest;
+  | GetPublicKeyRequest
+  | GetAddressRequest
+  | ExportSeedRequest
+  | ConfigureRequest
+  | GetBalanceRequest
+  | GetMessagesRequest
+  | SignMessageRequest
+  | SignMessageRawRequest
+  | SendMessageRequest
+  | GetGasForMessageRequest
+  | GetAppKeyRequest;
 
 type Method = MetamaskNucypherRpcRequest["method"];
 
@@ -86,7 +89,10 @@ export interface SnapRpcMethodRequest {
   params: [MetamaskNucypherRpcRequest];
 }
 
-export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
+export type MetamaskRpcRequest =
+  | WalletEnableRequest
+  | GetPluginsRequest
+  | SnapRpcMethodRequest;
 
 export interface UnitConfiguration {
   symbol: string;
@@ -165,7 +171,7 @@ export interface NucypherSnapApi {
   sendMessage(signedMessage: SignedMessage): Promise<MessageStatus>;
   getMessages(): Promise<MessageStatus[]>;
   calculateGasForMessage(message: MessageRequest): Promise<MessageGasEstimate>;
-  getAppKey(): Promise<string>;
+  getAppKey(address: string): Promise<string>;
 }
 
 export interface KeyPair {
