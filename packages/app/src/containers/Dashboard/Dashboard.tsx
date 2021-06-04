@@ -40,8 +40,8 @@ export const Dashboard = () => {
   useEffect(() => {
     (async () => {
       if (state.nucypherSpan.isInstalled && state.nucypherSpan.snap) {
-        const filecoinApi = await state.nucypherSpan.snap.getNucypherSnapApi();
-        setApi(filecoinApi);
+        const snapApi = await state.nucypherSpan.snap.getNucypherSnapApi();
+        setApi(snapApi);
       }
     })();
   }, [state.nucypherSpan.isInstalled, state.nucypherSpan.snap]);

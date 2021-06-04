@@ -1,5 +1,5 @@
-import {FilecoinNetwork, MessageStatus, MetamaskNucypherRpcRequest, SnapConfig} from "@nucypher/nusnap-types";
-import {defaultConfiguration} from "./configuration/predefined";
+import { MetamaskNucypherRpcRequest, SnapConfig } from "@nucypher/nusnap-types";
+import { defaultConfiguration } from "./configuration/predefined";
 
 export type FMethodCallback = (
   originString: string,
@@ -7,29 +7,16 @@ export type FMethodCallback = (
 ) => Promise<unknown>;
 
 export type MetamaskState = {
-  filecoin: {
+  nucypher: {
     config: SnapConfig;
-    messages: MessageStatus[];
   };
 };
 
 export const EmptyMetamaskState: () => MetamaskState = () => ({
-  filecoin: {config: defaultConfiguration, messages: []}
+  nucypher: { config: defaultConfiguration, messages: [] },
 });
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
-  request(options: {method: string; params?: unknown[]}): unknown;
-  getAppKey(): Promise<string>;
-}
-
-export interface Asset {
-  balance: string|number;
-  customViewUrl?: string;
-  decimals?: number;
-  identifier: string;
-  image?: string;
-  symbol: string;
-  network: FilecoinNetwork;
-  id?: string;
+  request(options: { method: string; params?: unknown[] }): unknown;
 }

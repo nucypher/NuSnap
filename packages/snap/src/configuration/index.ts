@@ -1,19 +1,19 @@
 import {MetamaskState, Wallet} from "../interfaces";
 import {
   defaultConfiguration,
-  filecoinMainnetConfiguration,
-  filecoinTestnetConfiguration
+  nucypherMainnetConfiguration,
+  nucypherTestnetConfiguration
 } from "./predefined";
 import {SnapConfig} from "@nucypher/nusnap-types";
 
 export function getDefaultConfiguration(networkName?: string): SnapConfig {
   switch (networkName) {
     case "f":
-      console.log("Filecoin mainnett network selected");
-      return filecoinMainnetConfiguration;
+      console.log("NuCypher mainnett network selected");
+      return nucypherMainnetConfiguration;
     case "t":
-      console.log("Filecoin testnet network selected");
-      return filecoinTestnetConfiguration;
+      console.log("NuCypher testnet network selected");
+      return nucypherTestnetConfiguration;
     default:
       return defaultConfiguration;
   }
@@ -23,8 +23,8 @@ export async function getConfiguration(wallet: Wallet): Promise<SnapConfig> {
   const state = await wallet.request({
     method: 'snap_getState'
   }) as MetamaskState;
-  if (!state || !state.filecoin.config) {
+  if (!state || !state.nucypher.config) {
     return defaultConfiguration;
   }
-  return state.filecoin.config;
+  return state.nucypher.config;
 }

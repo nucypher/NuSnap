@@ -1,9 +1,8 @@
-# MetaMask snap
+# NuCypher snap demo
 
-- `yarn install`
-- serve snap
-- `yarn start`
+Follow instructions in root directory `README.md`. Alternatively, run:
 
-To deploy, ensure config is correct in `deploy.sh`, then run:
-
-- `./deploy.sh`
+```bash
+yarn install
+yarn start
+```

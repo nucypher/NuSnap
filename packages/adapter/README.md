@@ -1,23 +1,16 @@
-# FilSnap adapter
-![](https://github.com/nodefactoryio/filecoin-metamask-snap/workflows/ci/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![](https://img.shields.io/badge/yarn-%3E%3D1.17.0-orange.svg?style=flat-square)
-![Discord](https://img.shields.io/discord/608204864593461248?color=blue&label=Discord&logo=discord)
+# NuSnap adapter
 
-FilSnap adapter is used to install Filecoin snap and expose API toward snap.
-
-For more details on Filecoin snap itself see [snap repo](https://github.com/NodeFactoryIo/filecoin-metamask-snap) or read full [Filecoin snap documentation](https://github.com/NodeFactoryIo/filecoin-metamask-snap/wiki).
+NuSnap adapter is used to install NuCypher snap and expose API toward snap.
 
 ## Usage
 
-Adapter has only exposed function for installing Filecoin snap.
+Adapter has only exposed function for installing NuCypher snap.
 
 ```typescript
 async function enableNucypherSnap(
-  config: Partial<SnapConfig>, 
+  config: Partial<SnapConfig>,
   pluginOrigin?: string
-): Promise<MetamaskNucypherSnap> 
+): Promise<MetamaskNucypherSnap>;
 ```
 
 On snap installation, it is possible to send full or partial configuration.
@@ -29,26 +22,16 @@ Below you can see structure of config object:
 ```typescript
 export interface SnapConfig {
   derivationPath: string;
-  token: string;
-  network: FilecoinNetwork; // "f" || "t"
-  rpcUrl: string;
-  unit?: UnitConfiguration;
-}
-
-export interface UnitConfiguration {
-  symbol: string;
-  decimals: number;
-  image?: string;
-  customViewUrl?: string;
+  network: NucypherNetwork; // "mainnet" | "rinkeby" | ...
 }
 ```
 
-After snap installation, this function returns `MetamaskNucypherSnap` object that can be used to retrieve snap API. 
-An example of initializing Filecoin snap and invoking snap API is shown below.
+After snap installation, this function returns `MetamaskNucypherSnap` object that can be used to retrieve snap API.
+An example of initializing NuCypher snap and invoking snap API is shown below.
 
 ```typescript
 // install snap and fetch API
-const snap = await enableNucypherSnap({network: "t"});
+const snap = await enableNucypherSnap({ network: "mainnet" });
 const api = await MetamaskNucypherSnap.getNucypherSnapApi();
 
 // invoke API

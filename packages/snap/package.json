@@ -36,21 +36,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NodeFactoryIo/filecoin-metamask-snap.git"
+    "url": "https://github.com/nucypher/NuSnap"
   },
   "keywords": [
-    "filecoin",
+    "nucypher",
     "metamask",
     "snap",
     "plugin",
     "dapp",
     "wallet"
   ],
-  "author": "NodeFactory <info@nodefactory.io>",
+  "author": "TODO",
   "bugs": {
-    "url": "https://github.com/NodeFactoryIo/filecoin-metamask-snap/issues"
+    "url": "https://github.com/nucypher/NuSnap/issues"
   },
-  "homepage": "https://github.com/NodeFactoryIo/filecoin-metamask-snap#readme",
+  "homepage": "https://github.com/nucypher/NuSnap#readme",
   "web3Wallet": {
     "bundle": {
       "local": "dist/bundle.js",
@@ -85,12 +85,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@filecoin-shipyard/lotus-client-provider-nodejs": "^0.0.5",
-    "@filecoin-shipyard/lotus-client-rpc": "^0.0.11",
-    "@filecoin-shipyard/lotus-client-schema": "^0.0.14",
     "@metamask/key-tree": "^2.0.1",
-    "@openworklabs/filecoin-number": "^0.0.9",
-    "@zondax/filecoin-signing-tools": "^0.7.1",
     "bn.js": "^5.1.2",
     "deepmerge": "^4.2.2"
   }

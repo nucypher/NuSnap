@@ -2,8 +2,7 @@ import { hasMetaMask, isMetamaskSnapsSupported } from "./utils";
 import { MetamaskNucypherSnap as MFSnap } from "./snap";
 import { SnapConfig } from "@nucypher/nusnap-types";
 
-const defaultSnapOrigin =
-  "https://bafybeigzphbumdkucnj2c6nr5xb3kwsq5gs2gp7w3qldgbvfeycfsbjylu.ipfs.infura-ipfs.io";
+const defaultSnapOrigin = ""; // TODO: Deploy to IPFS?
 const defaultSnapId = `wallet_plugin_${defaultSnapOrigin}`;
 
 export type MetamaskNucypherSnap = MFSnap;
@@ -11,7 +10,7 @@ export type MetamaskNucypherSnap = MFSnap;
 export { hasMetaMask, isMetamaskSnapsSupported } from "./utils";
 
 /**
- * Install and enable Filecoin snap
+ * Install and enable NuCypher snap
  *
  * Checks for existence of MetaMask and version compatibility with snaps before installation.
  *
@@ -39,9 +38,10 @@ export async function enableNucypherSnap(
   if (!(await isMetamaskSnapsSupported())) {
     throw new Error("Current MetaMask version doesn't support snaps");
   }
-  if (!config.network) {
-    throw new Error("Configuration must at least define network type");
-  }
+  // TODO: Add network
+  // if (!config.network) {
+  //   throw new Error("Configuration must at least define network type");
+  // }
 
   // enable snap
   // TODO: Enable reloading in dev

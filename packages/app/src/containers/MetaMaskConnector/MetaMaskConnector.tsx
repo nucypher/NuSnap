@@ -3,7 +3,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import React, {useCallback, useContext, useEffect} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {MetamaskActions, MetaMaskContext} from "../../context/metamask";
-import {installFilecoinSnap, isFilecoinSnapInstalled} from "../../services/metamask";
+import {installNucypherSnap, isNucypherSnapInstalled} from "../../services/metamask";
 
 export const MetaMaskConnector = () => {
 
@@ -11,14 +11,14 @@ export const MetaMaskConnector = () => {
 
     useEffect(() => {
         (async () => {
-            if (await isFilecoinSnapInstalled()) {
+            if (await isNucypherSnapInstalled()) {
                 dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
             }
         })();
     }, [dispatch]);
 
     const installSnap = useCallback(async () => {
-        const installResult = await installFilecoinSnap();
+        const installResult = await installNucypherSnap();
         if (!installResult.isSnapInstalled) {
             dispatch({
                 type: MetamaskActions.SET_INSTALLED_STATUS,
