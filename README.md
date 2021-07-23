@@ -59,5 +59,5 @@ git clean -d -x -f ; yarn install ; cp -R rust-umbral/umbral-pre-wasm/pkg/* node
 - If the app doesn't start, try clearing LocalStorage in developer console:
 
 ```js
-localstorage.clear();
+localStorage.clear();
 ```

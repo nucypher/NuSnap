@@ -14,21 +14,21 @@ export const runUmbralExample = (
   // need a signing keypair.
 
   // Key Generation (on Alice's side)
-  const alice_sk = umbral.SecretKey.from_bytes(
+  const alice_sk = umbral.SecretKey.fromBytes(
     Buffer.from(aliceKeyPair.secretKey, "hex")
   ); // umbral.SecretKey.random();
-  const alice_pk = umbral.PublicKey.from_secret_key(alice_sk);
-  const signing_sk = umbral.SecretKey.from_bytes(
+  const alice_pk = alice_sk.publicKey();
+  const signing_sk = umbral.SecretKey.fromBytes(
     Buffer.from(signerKeyPair.secretKey, "hex")
   ); // umbral.SecretKey.random();
   const signer = new umbral.Signer(signing_sk);
   // const verifying_pk = umbral.PublicKey.from_secret_key(signing_sk); // unused key
 
   // Key Generation (on Bob's side)
-  const bob_sk = umbral.SecretKey.from_bytes(
+  const bob_sk = umbral.SecretKey.fromBytes(
     Buffer.from(bobKeyPair.secretKey, "hex")
   ); // umbral.SecretKey.random();
-  const bob_pk = umbral.PublicKey.from_secret_key(bob_sk);
+  const bob_pk = bob_sk.publicKey();
 
   // Now const's encrypt data with Alice's public key.
   // Invocation of `encrypt()` returns both the ciphertext and a capsule.
@@ -48,11 +48,7 @@ export const runUmbralExample = (
   // Since data was encrypted with Alice's public key, Alice can open the capsule
   // and decrypt the ciphertext with her private key.
 
-  const plaintext_alice = umbral.decrypt_original(
-    alice_sk,
-    capsule,
-    ciphertext
-  );
+  const plaintext_alice = umbral.decryptOriginal(alice_sk, capsule, ciphertext);
   console.assert(
     dec.decode(plaintext_alice) === plaintext,
     "decrypt_original() failed"
@@ -64,7 +60,7 @@ export const runUmbralExample = (
 
   const n = 3; // how many fragments to create
   const m = 2; // how many should be enough to decrypt
-  const kfrags = umbral.generate_kfrags(
+  const kfrags = umbral.generateKFrags(
     alice_sk,
     bob_pk,
     signer,
@@ -102,14 +98,14 @@ export const runUmbralExample = (
   // wasm-pack does not support taking arrays as arguments,
   // so we build a capsule+cfrags object before decryption.
   const plaintext_bob = capsule
-    .with_cfrag(cfrag0)
-    .with_cfrag(cfrag1)
-    .decrypt_reencrypted(bob_sk, alice_pk, ciphertext);
+    .withCFrag(cfrag0)
+    .withCFrag(cfrag1)
+    .decryptReencrypted(bob_sk, alice_pk, ciphertext);
   console.log({ plaintext_bob: dec.decode(plaintext_bob) });
 
   console.assert(
     dec.decode(plaintext_bob) === plaintext,
-    "decrypt_reencrypted() failed"
+    "decryptReencrypted() failed"
   );
 
   console.log("Success!");
