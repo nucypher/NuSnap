@@ -18,46 +18,9 @@ Install 9.3.0 version of [MetaMask/metamask-filecoin-developer-beta](https://git
 
 ## Usage
 
-Checkout git submodules
-
-```bash
-git submodule update --init --recursive
-```
-
-Build dependencies
-
-```bash
-cd rust-umbral
-cargo build
-cd umbral-pre-wasm
-make
-```
-
-Follow original instructions in `README.old.md`:
+Run:
 
 ```bash
 yarn install
-
-# Workaround for linking local package
-cp -R rust-umbral/umbral-pre-wasm/pkg/* node_modules/umbral-pre
-
 yarn run demo
-```
-
-## Common issues
-
-- Sometimes, the `package/app` dependencies in `package/snap` are not properly generated. Run:
-
-```bash
-# Remove all local files and dependencies
-# Be cautious: This is a destructive command
-git clean -d -x -f -n # remove -n after inspecting results
-
-git clean -d -x -f ; yarn install ; cp -R rust-umbral/umbral-pre-wasm/pkg/* node_modules/umbral-pre
-```
-
-- If the app doesn't start, try clearing LocalStorage in developer console:
-
-```js
-localStorage.clear();
 ```
